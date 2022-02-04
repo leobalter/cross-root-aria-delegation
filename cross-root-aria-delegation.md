@@ -2,7 +2,7 @@
 
 source: https://github.com/WICG/webcomponents/issues/917
 
-It's critically important that content on the web be accessible. Maintaining accessibility within web components is challenging as the shadow root encapsulation prevents references between elements in different roots. These references are fundamental to enable assistive technologies within web applications.
+Content on the web be accessible is critically important. Maintaining accessibility within web components is challenging as the shadow root encapsulation prevents references between elements in different roots. These references are fundamental to enable assistive technologies within web applications.
 
 Today, a web application can be composed by many web components that are connected through different relationships. ARIA is the appropriate standard to describe those relationships. Unfortunately, it's not possible to natively connect ARIA attributes from elements belonging to different DOM trees belonging to the main page and one or many web components. Because of that, some complex and not fully successful workarounds need to be applied.
 
