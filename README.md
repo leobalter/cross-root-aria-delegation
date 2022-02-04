@@ -18,7 +18,7 @@ https://w3c.github.io/webcomponents-cg/#cross-root-aria
 
 ## Motivation
 
-It's critically important that content on the web be accessible. Making web component content accessible currently requires many complicated and only partially-successful workarounds, such as:
+Content on the web be accessible is critically important. Making web component content accessible currently requires many complicated and only partially-successful workarounds, such as:
 
 * Observing and moving ARIA-related attributes across elements (for role, etc.)
 * Using non-standard attributes for ARIA features, in order to apply them to elements in a shadow root.
