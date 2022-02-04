@@ -6,7 +6,6 @@ Content on the web be accessible is critically important. Maintaining accessibil
 
 Today, a web application can be composed by many web components that are connected through different relationships. ARIA is the appropriate standard to describe those relationships. Unfortunately, it's not possible to natively connect ARIA attributes from elements belonging to different DOM trees belonging to the main page and one or many web components. Because of that, some complex and not fully successful workarounds need to be applied.
 
-
 * Observing and moving ARIA-related attributes across elements (for role, etc.).
 * Using non-standard attributes for ARIA features, in order to apply them to elements in a shadow root.
 * Requiring usage of custom elements to wrap/slot elements so that ARIA attributes can be placed directly on them. This gets very complicated as the number of slotted inputs and levels of shadow root nesting increase.

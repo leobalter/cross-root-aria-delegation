@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <script src='https://www.w3.org/Tools/respec/respec-w3c' async class='remove'></script>
+    <script class='remove'>
+      // All config options at https://respec.org/docs/
+      var respecConfig = {
+        // Working Groups ids at https://respec.org/w3c/groups/
+        group: "webcomponents", 
+        specStatus: "unofficial",
+        editors: [{
+          name: "Leo Balter",
+          url: "http://github.com/leobalter",
+        }],
+        github: {
+          branch: "main",
+          repoURL: "leobalter/cross-root-aria-delegation", 
+        },
+        // See https://respec.org/docs/#xref for usage.
+        xref: "web-platform",
+      };
+    </script>
+  </head>
+  <body>
+    <h1 id="title">Cross-root Aria Delegation</h1>
+    <section id='abstract'>
+      <p>
+        This is required.  
+      </p>
+    </section>
+    <section id='sotd'>
+      <p>
+        This is required.
+      </p>
+    </section>
+    <section class="informative">
+      <h2>Introduction</h2>
+      <p>Content on the web be accessible is critically important. Maintaining accessibility within web components is challenging as the shadow root encapsulation prevents references between elements in different roots. These references are fundamental to enable assistive technologies within web applications.</p>
+      <p>Today, a web application can be composed by many web components that are connected through different relationships. ARIA is the appropriate standard to describe those relationships. Unfortunately, it's not possible to natively connect ARIA attributes from elements belonging to different DOM trees belonging to the main page and one or many web components. Because of that, some complex and not fully successful workarounds need to be applied.</p>  
+      <ul>
+        <li>Observing and moving ARIA-related attributes across elements (for role, etc.).</li>
+        <li>Using non-standard attributes for ARIA features, in order to apply them to elements in a shadow root.</li>
+        <li>Requiring usage of custom elements to wrap/slot elements so that ARIA attributes can be placed directly on them. This gets very complicated as the number of slotted inputs and levels of shadow root nesting increase.</li>
+        <li>Duplicating nodes across shadow root boundaries.</li>
+        <li>Abandoning Shadow DOM.</li>
+      </ul>
+      <p>This proposal introduces a delegation API to allow for ARIA attributes and properties set on a Web Component to be forwarded to elements inside of its shadowroot.</p>
+      <p>This mechanism will allow users to apply standard best practices for ARIA and resolve a large margin of accessibility use cases for applications of native Web components and native Shadow DOM. This API is most suited for one-to-one delegation, but should also work for one-to-many scenarios. There is no mechanism for directly relating two elements in different shadowroots together, but this will still be possible manually with the element reflection API.</p>
+      <p>The proposed extension adds a new `delegates*` (e.g.: `delegatesAriaLabel`, `delegatesAriaDescribedBy`) options to the `.attachShadow` method similarly to the `delegatesFocus`, while introducing a new content attribute `auto*` (e.g.: `autoarialabel`, `autoariadescribedby`) to be used in the shadowroot inner elements. This has an advantage that it works with Declarative Shadow DOM as well, and it is consistent with `delegatesFocus`. Even though, it requires another set of html attributes in the declarative shadow root template. The declarative form works better with common developer paradigm where you may not necessarily have access to a DOM node right where you're creating / declaring it.</p>
+    </section>
+    <section data-dfn-for="Foo">
+      <h2>Start your spec!</h2>
+      <pre class="idl">
+      [Exposed=Window]
+      interface Foo {
+        attribute DOMString bar;
+        undefined doTheFoo();
+      };
+      </pre>
+      <section>
+        <h2><dfn>bar</dfn> attribute</h2>
+        <p>When getting, the {{Foo/bar}} attribute returns you a 🍹.</p>
+      </section>
+      <section>
+        <h2><dfn>doTheFoo()</dfn> method</h2>
+        <p>When called, {{Foo/doTheFoo()}} MUST behave as follows:</p>
+        <ol class="algorithm">
+          <li>If <var>thing</var>....</li>
+          <li>Let <var>someProp</var>... of the [[DOM]] spec.</li>
+        </ol>
+      </section>
+    </section>
+    <section id='conformance'>
+      <!-- This section is filled automatically by ReSpec. -->
+    </section>
+  </body>
+</html>
