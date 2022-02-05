@@ -12,29 +12,20 @@
         editors: [{
           name: "Leo Balter",
           url: "http://github.com/leobalter",
+          company: "Salesforce"
         }],
         github: {
           branch: "main",
           repoURL: "leobalter/cross-root-aria-delegation", 
         },
         // See https://respec.org/docs/#xref for usage.
-        xref: "web-platform",
+        xref: ["web-platform", "wai-aria"],
       };
     </script>
   </head>
   <body>
     <h1 id="title">Cross-root Aria Delegation</h1>
     <section id='abstract'>
-      <p>
-        This is required.  
-      </p>
-    </section>
-    <section id='sotd'>
-      <p>
-        This is required.
-      </p>
-    </section>
-    <section class="informative">
       <h2>Introduction</h2>
       <p>Content on the web be accessible is critically important. Maintaining accessibility within web components is challenging as the shadow root encapsulation prevents references between elements in different roots. These references are fundamental to enable assistive technologies within web applications.</p>
       <p>Today, a web application can be composed by many web components that are connected through different relationships. ARIA is the appropriate standard to describe those relationships. Unfortunately, it's not possible to natively connect ARIA attributes from elements belonging to different DOM trees belonging to the main page and one or many web components. Because of that, some complex and not fully successful workarounds need to be applied.</p>  
@@ -45,34 +36,298 @@
         <li>Duplicating nodes across shadow root boundaries.</li>
         <li>Abandoning Shadow DOM.</li>
       </ul>
+    </section>
+    <section id='sotd'><!-- this is required --></section>
+    <section class="informative">
+      <h2>This proposal</h2>
       <p>This proposal introduces a delegation API to allow for ARIA attributes and properties set on a Web Component to be forwarded to elements inside of its shadowroot.</p>
       <p>This mechanism will allow users to apply standard best practices for ARIA and resolve a large margin of accessibility use cases for applications of native Web components and native Shadow DOM. This API is most suited for one-to-one delegation, but should also work for one-to-many scenarios. There is no mechanism for directly relating two elements in different shadowroots together, but this will still be possible manually with the element reflection API.</p>
       <p>The proposed extension adds a new `delegates*` (e.g.: `delegatesAriaLabel`, `delegatesAriaDescribedBy`) options to the `.attachShadow` method similarly to the `delegatesFocus`, while introducing a new content attribute `auto*` (e.g.: `autoarialabel`, `autoariadescribedby`) to be used in the shadowroot inner elements. This has an advantage that it works with Declarative Shadow DOM as well, and it is consistent with `delegatesFocus`. Even though, it requires another set of html attributes in the declarative shadow root template. The declarative form works better with common developer paradigm where you may not necessarily have access to a DOM node right where you're creating / declaring it.</p>
+    
+      <aside class="example" title="How to use it">
+        <p>
+          The ARIA attributes assigned in the host x-foo are delegated to inner elements inside the component's shadowroot. Today, custom code can reflect this application but synthetically applying the aria attributes and their effects to both the host x-foo and its inner elements.
+        <p>
+        <pre class="html">
+          &lt;span id="foo">Description!&lt;/span>
+          &lt;x-foo aria-label="Hello!" aria-describedby="foo">
+            #shadow-root
+              &lt;input id="input" autoarialabel autoariadescribedby />
+              &lt;span autoarialabel>Another target&lt;/span>
+          &lt;/x-foo>
+        </pre>
+        <pre class="js">
+          export class XFoo extends HTMLElement {
+            constructor() {
+              super();
+              this.attachShadow({ mode: "open", delegatesAriaLabel: true, delegatesAriaDescribedBy: true });
+              this.shadowRoot.appendChild(template.content.cloneNode(true));
+            }
+          }
+          customElements.define("x-foo", XFoo);
+        </pre>
+        <p>For instance when delegating aria-label you want readers to know that it applies to the input, not both the input and the host. There are current workarounds include copying the attribute over and removing it from the host, but that introduces other problems.</p>
+        <p>- <a href="https://glitch.com/edit/#!/delegation-via-attr?path=x-foo.js%3A24%3A0">Live example</a></p>
+      </aside>
+    
+      <p class="ednote">The attributes names such as `shadowrootdelegates*` are very long and some consideration for shorter names by removing the `shadowroot` prefix can be discussed as long the discussion is sync'ed with the stakeholders of the respective Declarative Shadow DOM proposal.</p>
     </section>
-    <section data-dfn-for="Foo">
-      <h2>Start your spec!</h2>
-      <pre class="idl">
-      [Exposed=Window]
-      interface Foo {
-        attribute DOMString bar;
-        undefined doTheFoo();
-      };
-      </pre>
-      <section>
-        <h2><dfn>bar</dfn> attribute</h2>
-        <p>When getting, the {{Foo/bar}} attribute returns you a 🍹.</p>
-      </section>
-      <section>
-        <h2><dfn>doTheFoo()</dfn> method</h2>
-        <p>When called, {{Foo/doTheFoo()}} MUST behave as follows:</p>
-        <ol class="algorithm">
-          <li>If <var>thing</var>....</li>
-          <li>Let <var>someProp</var>... of the [[DOM]] spec.</li>
+
+    <section id="idl-interface" class="normative">
+      <h2>IDL Interface</h2>
+      <p>Conforming user agents MUST implement the following IDL interface.</p>
+      <section id="AutoARIAMixin" class="normative" data-dfn-for="AutoARIAMixin" data-link-for="AutoARIAMixin">
+        <h2>Interface Mixin <dfn>AutoARIAMixin</dfn></h2>
+        <pre class="idl">
+          interface mixin AutoARIAMixin {
+            attribute DOMString? autoAriaAtomic;
+            attribute DOMString? autoAriaAutoComplete;
+            attribute DOMString? autoAriaBusy;
+            attribute DOMString? autoAriaChecked;
+            attribute DOMString? autoAriaColCount;
+            attribute DOMString? autoAriaColIndex;
+            attribute DOMString? autoAriaColIndexText;
+            attribute DOMString? autoAriaColSpan;
+            attribute DOMString? autoAriaCurrent;
+            attribute DOMString? autoAriaDescription;
+            attribute DOMString? autoAriaDisabled;
+            attribute DOMString? autoAriaExpanded;
+            attribute DOMString? autoAriaHasPopup;
+            attribute DOMString? autoAriaHidden;
+            attribute DOMString? autoAriaInvalid;
+            attribute DOMString? autoAriaKeyShortcuts;
+            attribute DOMString? autoAriaLabel;
+            attribute DOMString? autoAriaLevel;
+            attribute DOMString? autoAriaLive;
+            attribute DOMString? autoAriaModal;
+            attribute DOMString? autoAriaMultiLine;
+            attribute DOMString? autoAriaMultiSelectable;
+            attribute DOMString? autoAriaOrientation;
+            attribute DOMString? autoAriaPlaceholder;
+            attribute DOMString? autoAriaPosInSet;
+            attribute DOMString? autoAriaPressed;
+            attribute DOMString? autoAriaReadOnly;
+            attribute DOMString? autoAriaRequired;
+            attribute DOMString? autoAriaRoleDescription;
+            attribute DOMString? autoAriaRowCount;
+            attribute DOMString? autoAriaRowIndex;
+            attribute DOMString? autoAriaRowIndexText;
+            attribute DOMString? autoAriaRowSpan;
+            attribute DOMString? autoAriaSelected;
+            attribute DOMString? autoAriaSetSize;
+            attribute DOMString? autoAriaSort;
+            attribute DOMString? autoAriaValueMax;
+            attribute DOMString? autoAriaValueMin;
+            attribute DOMString? autoAriaValueNow;
+            attribute DOMString? autoAriaValueText;
+          };
+        </pre>
+        <p>Interfaces that include <code>AutoARIAMixin</code> must provide the following algorithms:</p>
+
+        <ul>
+          <li><dfn><code>AutoARIAMixin</code> getter steps</dfn>, which take the host interface instance, IDL attribute name, and content attribute name, and must return a string value; and
+          <li><dfn><code>AutoARIAMixin</code> setter steps</dfn>, which take the host interface instance, IDL attribute name, content attribute name, and string value, and must return nothing.</li>
+        </ul>
+
+        <p>For every IDL attribute <var>idlAttribute</var> defined in <code>AutoARIAMixin</code>, on getting, it must perform the following steps:</p>
+
+        <ol>
+          <li><p>Let <var>contentAttribute</var> be the ARIA content attribute determined by looking up <var>idlAttribute</var> in the ARIA Attribute Correspondence table.</p></li>
+
+          <li><p>Return the result of running the <a><code>AutoARIAMixin</code> getter steps</a>, given this, <var>idlAttribute</var>, and <var>contentAttribute</var>.</p></li>
         </ol>
+
+        <p>Similarly, on setting, it must perform the following steps:</p>
+
+        <ol>
+          <li><p>Let <var>contentAttribute</var> be the ARIA content attribute determined by looking up <var>idlAttribute</var> in the ARIA Attribute Correspondence table.</p></li>
+
+          <li><p>Run the <a><code>AutoARIAMixin</code> setter steps</a>, given this, <var>idlAttribute</var>, <var>contentAttribute</var>, and the given value.</p></li>
+        </ol>
+
+        <p class="note">This very general framework is motivated by the desire for different host interfaces, such as <code>Element</code> and <code>ElementInternals</code>, to give these IDL attributes different behaviors. The alternative is requiring each host interface to duplicate the IDL attributes independently, so that they can specify independent behaviors, but that comes with a high risk of them getting out of sync.</p>
       </section>
+      <section id="autoariaproperties-correspondence" class="normative" data-dfn-for="AutoARIAMixin" data-link-for="AutoARIAMixin">
+        <h2>AutoARIA Attribute Correspondence</h2>
+        <p>The following table provides a correspondence between IDL attribute names and content attribute names, for use by <code>AutoARIAMixin</code>.</p>
+    
+        <table>
+          <tr><th>IDL Attribute</th><th>Reflected AutoARIA Content Attribute</th></tr>
+          <tr><td><dfn>autoAriaAtomic</dfn></td><td><pref>autoariaatomic</pref></td></tr>
+          <tr><td><dfn>autoAriaAutoComplete</dfn></td><td><pref>autoariaautocomplete</pref></td></tr>
+          <tr><td><dfn>autoAriaBusy</dfn></td><td><sref>autoariabusy</sref></td></tr>
+          <tr><td><dfn>autoAriaChecked</dfn></td><td><sref>autoariachecked</sref></td></tr>
+          <tr><td><dfn>autoAriaColCount</dfn></td><td><pref>autoariacolcount</pref></td></tr>
+          <tr><td><dfn>autoAriaColIndex</dfn></td><td><pref>autoariacolindex</pref></td></tr>
+          <tr><td><dfn>autoAriaColIndexText</dfn></td><td><pref>autoariacolindextext</pref></td></tr>
+          <tr><td><dfn>autoAriaColSpan</dfn></td><td><pref>autoariacolspan</pref></td></tr>
+          <tr><td><dfn>autoAriaCurrent</dfn></td><td><sref>autoariacurrent</sref></td></tr>
+          <tr><td><dfn>autoAriaDescription</dfn></td><td><pref>autoariadescription</pref></td></tr>
+          <tr><td><dfn>autoAriaDisabled</dfn></td><td><sref>autoariadisabled</sref></td></tr>
+          <tr><td><dfn>autoAriaExpanded</dfn></td><td><sref>autoariaexpanded</sref></td></tr>
+          <tr><td><dfn>autoAriaHasPopup</dfn></td><td><pref>autoariahaspopup</pref></td></tr>
+          <tr><td><dfn>autoAriaHidden</dfn></td><td><sref>autoariahidden</sref></td></tr>
+          <tr><td><dfn>autoAriaInvalid</dfn></td><td><sref>autoariainvalid</sref></td></tr>
+          <tr><td><dfn>autoAriaKeyShortcuts</dfn></td><td><pref>autoariakeyshortcuts</pref></td></tr>
+          <tr><td><dfn>autoAriaLabel</dfn></td><td><pref>autoarialabel</pref></td></tr>
+          <tr><td><dfn>autoAriaLevel</dfn></td><td><pref>autoarialevel</pref></td></tr>
+          <tr><td><dfn>autoAriaLive</dfn></td><td><pref>autoarialive</pref></td></tr>
+          <tr><td><dfn>autoAriaModal</dfn></td><td><pref>autoariamodal</pref></td></tr>
+          <tr><td><dfn>autoAriaMultiLine</dfn></td><td><pref>autoariamultiline</pref></td></tr>
+          <tr><td><dfn>autoAriaMultiSelectable</dfn></td><td><pref>autoariamultiselectable</pref></td></tr>
+          <tr><td><dfn>autoAriaOrientation</dfn></td><td><pref>autoariaorientation</pref></td></tr>
+          <tr><td><dfn>autoAriaPlaceholder</dfn></td><td><pref>autoariaplaceholder</pref></td></tr>
+          <tr><td><dfn>autoAriaPosInSet</dfn></td><td><pref>autoariaposinset</pref></td></tr>
+          <tr><td><dfn>autoAriaPressed</dfn></td><td><sref>autoariapressed</sref></td></tr>
+          <tr><td><dfn>autoAriaReadOnly</dfn></td><td><pref>autoariareadonly</pref></td></tr>
+          <tr><td><dfn>autoAriaRequired</dfn></td><td><pref>autoariarequired</pref></td></tr>
+          <tr><td><dfn>autoAriaRoleDescription</dfn></td><td><pref>autoariaroledescription</pref></td></tr>
+          <tr><td><dfn>autoAriaRowCount</dfn></td><td><pref>autoariarowcount</pref></td></tr>
+          <tr><td><dfn>autoAriaRowIndex</dfn></td><td><pref>autoariarowindex</pref></td></tr>
+          <tr><td><dfn>autoAriaRowIndexText</dfn></td><td><pref>autoariarowindextext</pref></td></tr>
+          <tr><td><dfn>autoAriaRowSpan</dfn></td><td><pref>autoariarowspan</pref></td></tr>
+          <tr><td><dfn>autoAriaSelected</dfn></td><td><sref>autoariaselected</sref></td></tr>
+          <tr><td><dfn>autoAriaSetSize</dfn></td><td><pref>autoariasetsize</pref></td></tr>
+          <tr><td><dfn>autoAriaSort</dfn></td><td><pref>autoariasort</pref></td></tr>
+          <tr><td><dfn>autoAriaValueMax</dfn></td><td><pref>autoariavaluemax</pref></td></tr>
+          <tr><td><dfn>autoAriaValueMin</dfn></td><td><pref>autoariavaluemin</pref></td></tr>
+          <tr><td><dfn>autoAriaValueNow</dfn></td><td><pref>autoariavaluenow</pref></td></tr>
+          <tr><td><dfn>autoAriaValueText</dfn></td><td><pref>autoariavaluetext</pref></td></tr>
+        </table>
+        <p class="note">Note: Attributes <pref>autoariadropeffect</pref> and <sref>autoariagrabbed</sref> were deprecated in ARIA 1.1 and do not have corresponding IDL attributes.</p>
+    
+        <section class="informative" id="idl_attr_disambiguation">
+          <h3>Disambiguation Pattern</h3>
+          <p>Though specification authors may make exceptions to this pattern, the following rules were used to disambiguate names and case of the IDL attributes listed above.</p>
+          <ul>
+            <li>Any attribute name referencing concepts that are combinations of two or more words (such as "described by") becomes a camel-cased IDL attribute capitalizing each word boundary. For example, <pref>autoariadescribedby</pref> becomes <code>ariaDescribedBy</code> with both the D and B capitalized.</li>
+            <li>Likewise, any attribute name referencing concepts that can be hyphenated (such as "multi-selectable") becomes a camel-cased IDL attribute capitalizing each hyphenation boundary. For example, the only valid spelling for "multi-selectable" is hyphenated, so <pref>autoariamultiselectable</pref> becomes <code>ariaMultiSelectable</code> with both the M and S capitalized.</li>
+            <li>When trusted dictionary sources list both hyphenated or non-hyphenated spellings (e.g. "multi-line" and "multiline" are both valid spellings) use the hyphenated version and apply the hyphenation rule above. For example, <pref>autoariamultiline</pref> becomes <code>ariaMultiLine</code> with both the M and L capitalized.</li>
+            <li>If all trusted dictionary sources list a single spelling of a compound word with no spaces or hyphens, only the first letter of the term is capitalized. For example, neither “place-holder” nor “place holder” are considered valid spellings of the term “placeholder,” so <pref>autoariaplaceholder</pref> becomes <code>ariaPlaceholder</code> with only the P capitalized.</li>
+            <li>There are currently no acronym-based ARIA attributes, but if future attributes include acronym usage, attempt to match existing DOM conventions (e.g. ID becomes Id).</li>
+          </ul>
+        </section>
+        <section class="informative" id="idl_attr_exceptions">
+          <h3>IDL Attribute Name Notes or Exceptions</h3>
+          <p>Any notes or exceptions for specific attribute names will be listed here.</p>
+          <ul>
+            <li><code>ariaPosInSet</code>: The <pref>autoariaposinset</pref> attribute refers to an item's position in a set (two words: "in set") rather than the "inset" of an item from the beginning of the collection. Therefore the IDL attribute name is <code>ariaPosInSet</code> with the P, I, and second S capitalized, <em>not</em> <code>ariaPosInset</code>.</li>
+          </ul>
+        </section>
+      </section>
+    
+      <section id="idl_element">
+        <h2><code>ARIAMixin</code> Mixed in to <code>Element</code></h2>
+    
+        <p>User agents MUST include <code>ARIAMixin</code> on <code>Element</code>:</p>
+    
+        <pre class="idl">
+          Element includes ARIAMixin;
+        </pre>
+    
+        <p>For <code>Element</code>:</p>
+        <ul>
+          <li><p>The <a><code>ARIAMixin</code> getter steps</a> given <var>element</var>, <var>idlAttribute</var>, and <var>contentAttribute</var> are to return the result of the getter algorithm for <var>idlAttribute</var> <a href="https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflect">reflecting</a> <var>contentAttribute</var> on <var>element</var>.</p></li>
+          <li><p>The <a><code>ARIAMixin</code> setter steps</a> given <var>element</var>, <var>idlAttribute</var>, <var>contentAttribute</var>, and <var>value</var> are to perform the setter algorithm for <var>idlAttribute</var> <a href="https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflect">reflecting</a> <var>contentAttribute</var> on <var>element</var>, given <var>value</var>.</p></li>
+        </ul>
+    
+        <p class="note">In practice, this means that, e.g., the <code>role</code> IDL on <code>Element</code> reflects the <code>role</code> content attribute; the <code>ariaValueMin</code> IDL attribute reflects the <code>aria-valuemin</code> content attribute; etc.</p>
+      </section>
+    </section>
+    <section data-dfn-for="crossRootExtension">
+      <h2>Cross-Root ARIA extension for Element</h2>
+      [Exposed=Window]
+interface Element : Node {
+  
+};
+
+dictionary ShadowRootInit {
+  required ShadowRootMode mode;
+  boolean delegatesFocus = false;
+  SlotAssignmentMode slotAssignment = "named";
+  boolean delegatesAriaDescribedBy = false;
+  boolean delegatesAriaLabel = false;
+  boolean delegatesAriaDescribedBy = false; <!-- TODO: complete -->
+  boolean delegatesAriaDescribedBy = false;
+  boolean delegatesAriaDescribedBy = false;
+  boolean delegatesAriaDescribedBy = false;
+  boolean delegatesAriaDescribedBy = false;
+  boolean delegatesAriaDescribedBy = false;
+  boolean delegatesAriaDescribedBy = false;
+  boolean delegatesAriaDescribedBy = false;
+  boolean delegatesAriaDescribedBy = false;
+  boolean delegatesAriaDescribedBy = false;
+  boolean delegatesAriaDescribedBy = false;
+  boolean delegatesAriaDescribedBy = false;
+};
+    </section>
+    <section data-dfn-for="attachShadowExtension">
+      <h2>Extension for attachShadow</h2>
+      <p>The <code>attachShadow(<var>init</var>)</code> method steps are:</p>
+      <ol>
+        <li><p>If this's namespace is not the HTML namespace, then throw a "{{NotSupportedError}}" {{DOMException}}.
+        <li>
+          <p>If this's local name is not one of the following:
+          <ul class=brief>
+            <li>a valid custom element name
+            <li>
+              "<code>article</code>",
+              "<code>aside</code>",
+              "<code>blockquote</code>",
+              "<code>body</code>",
+              "<code>div</code>",
+              "<code>footer</code>",
+              "<code>h1</code>",
+              "<code>h2</code>",
+              "<code>h3</code>",
+              "<code>h4</code>",
+              "<code>h5</code>",
+              "<code>h6</code>",
+              "<code>header</code>",
+              "<code>main</code>",
+              "<code>nav</code>",
+              "<code>p</code>",
+              "<code>section</code>", or
+              "<code>span</code>"
+            </li>
+          </ul>
+          <p>then throw a "{{NotSupportedError}}" {{DOMException}}.
+        </li>
+        <li>
+          <p>If this's local name is a valid custom element name, or this's <code>is</code> value is not null, then:
+          <ol>
+            <li><p>Let <var>definition</var> be the result of looking up a custom element definition given this's node document, its namespace, its local name, and its <code>is</code> value.
+            <li><p>If <var>definition</var> is not null and <var>definition</var>'s disable shadow is true, then throw a "{{NotSupportedError}}" {{DOMException}}.
+          </ol>
+        </li>
+        <li><p>If this is a shadow host, then throw an "{{NotSupportedError}}" {{DOMException}}.
+        <li><p>Let <var>shadow</var> be a new shadow root whose node document is this's node document, host is this, and mode is <var>init</var>["{{ShadowRootInit/mode}}"].
+        <li><p>Set <var>shadow</var>'s delegates focus to <var>init</var>["{{ShadowRootInit/delegatesFocus}}"].
+        <li><p>If this's custom element state is "<code>precustomized</code>" or "<code>custom</code>", then set <var>shadow</var>'s available to element internals to true.
+        <li><p>Set <var>shadow</var>'s slot assignment to <var>init</var>["{{ShadowRootInit/slotAssignment}}"].
+        <li><p>Set this's shadow root to <var>shadow</var>.
+        <li><p>Return <var>shadow</var>.
+      </ol>
+      <p>The <code>shadowRoot</code> getter steps are:
+      <ol>
+        <li><p>Let <var>shadow</var> be this's shadow root.
+        <li><p>If <var>shadow</var> is null or its mode is "<code>closed</code>", then return null.</p></li>
+        <li><p>Return <var>shadow</var>.
+      </ol>
     </section>
     <section id='conformance'>
       <!-- This section is filled automatically by ReSpec. -->
+    </section>
+    <section id="index" class="appendix">
+      <h2>Appendix</h2>
+      <h3>Original Threads:</h3>
+      <ul dir="auto">
+        <li><a href="https://w3c.github.io/webcomponents-cg/#cross-root-aria">Public summary from WCCG</a></li>
+        <li><a href="https://github.com/WICG/aom/issues/169">WICG/aom#169</a></li>
+        <li><a href="https://github.com/WICG/aom/issues/107">WICG/aom#107</a></li>
+        <li><a href="https://github.com/WICG/webcomponents/issues/917">WICG/webcomponents#917</a></li>
+        <li><a href="https://github.com/WICG/webcomponents/issues/916">WICG/webcomponents#916</a></li>
+      </ul>
     </section>
   </body>
 </html>
