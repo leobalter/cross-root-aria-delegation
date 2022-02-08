@@ -16,8 +16,5 @@
   "bugs": {
     "url": "https://github.com/leobalter/cross-root-aria-delegation/issues"
   },
-  "homepage": "https://github.com/leobalter/cross-root-aria-delegation#readme",
-  "devDependencies": {
-    "respec-validator": "^1.5.8"
-  }
+  "homepage": "https://github.com/leobalter/cross-root-aria-delegation#readme"
 }
