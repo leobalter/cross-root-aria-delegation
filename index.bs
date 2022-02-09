@@ -381,7 +381,7 @@ User agents MUST update the attachShadow method signature in the <code>Element</
 <p>The `attachShadow` method steps have their last 2 steps with:
 
 <ol>
-  <li><p>Set each attribute in the [[#delegates-correspondence]] table into <var>shadow</var> to the corresponding <var>init</var>[delegates attribute].
+  <li><p>Set each attribute in the [[#delegates-correspondence]] table into <var>shadow</var> to the corresponding <var ignore="">init</var>[delegates attribute].
 
   <li><p>Set <a>this</a>'s <a for=Element>shadow root</a> to <var>shadow</var>.
 
