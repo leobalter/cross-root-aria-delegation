@@ -16,6 +16,8 @@ jobs:
 
       - name: Output to HTML
         uses: netwerk-digitaal-erfgoed/bikeshed-action@v1
+        with:
+          keep_files: true
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
