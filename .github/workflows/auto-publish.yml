@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Create folder
+        runs: mkdir -p public
+
       - name: Output to HTML
         uses: netwerk-digitaal-erfgoed/bikeshed-action@v1
         with:
