@@ -1,23 +1,23 @@
 name: Publish and Deploy
 
 on:
-  pull_request: {}
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches: 
+      - main
+  pull_request:
 
 jobs:
-  main:
+  deploy:
     runs-on: ubuntu-20.04
     steps:
-      # See doc at https://github.com/actions/checkout#checkout-v2
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Output to HTML
         uses: netwerk-digitaal-erfgoed/bikeshed-action@v1
 
       - name: Publish HTML to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
