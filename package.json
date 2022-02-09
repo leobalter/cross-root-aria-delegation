@@ -4,7 +4,8 @@
   "description": "Cross-root ARIA Delegation Proposal",
   "main": "index.js",
   "scripts": {
-    "test": "respec-validator index.html"
+    "build": "bikeshed spec",
+    "test": "bikeshed -d spec"
   },
   "repository": {
     "type": "git",

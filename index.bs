@@ -4,7 +4,7 @@ Shortname: cross-root-aria-delegation
 Level: 1
 Status: w3c/UD
 Group: webcomponents
-URL: http://example.com/url-this-spec-will-live-at
+URL: https://leobalter.github.io/cross-root-aria-delegation/
 Editor: Leo Balter, Salesforce http://www.salesforce.com, leonardo.balter@gmail.com, http://github.com/leobalter
 Abstract: A shadowRoot delegation API to allow for ARIA attributes and properties set on a Web Component to be forwarded to elements inside of its shadowroot.
 </pre>
