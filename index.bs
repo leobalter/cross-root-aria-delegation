@@ -23,15 +23,13 @@ Today, a web application can be composed by many web components that are connect
 - Abandoning Shadow DOM.
 
 <section class=informative>
-  
-This proposal
-============================
+  ## This proposal
 
-This proposal introduces a delegation API to allow for ARIA attributes and properties set on a Web Component to be forwarded to elements inside of its shadowroot.
+  This proposal introduces a delegation API to allow for ARIA attributes and properties set on a Web Component to be forwarded to elements inside of its shadowroot.
 
-This mechanism will allow users to apply standard best practices for ARIA and resolve a large margin of accessibility use cases for applications of native Web components and native Shadow DOM. This API is most suited for one-to-one delegation, but should also work for one-to-many scenarios. There is no mechanism for directly relating two elements in different shadowroots together, but this will still be possible manually with the element reflection API.
+  This mechanism will allow users to apply standard best practices for ARIA and resolve a large margin of accessibility use cases for applications of native Web components and native Shadow DOM. This API is most suited for one-to-one delegation, but should also work for one-to-many scenarios. There is no mechanism for directly relating two elements in different shadowroots together, but this will still be possible manually with the element reflection API.
 
-The proposed extension adds a new `delegates*` (e.g.: `delegatesAriaLabel`, `delegatesAriaDescribedBy`) options to the `.attachShadow` method similarly to the `delegatesFocus`, while introducing a new content attribute `auto*` (e.g.: `autoarialabel`, `autoariadescribedby`) to be used in the shadowroot inner elements. This has an advantage that it works with Declarative Shadow DOM as well, and it is consistent with `delegatesFocus`. Even though, it requires another set of html attributes in the declarative shadow root template. The declarative form works better with common developer paradigm where you may not necessarily have access to a DOM node right where you're creating / declaring it.
+  The proposed extension adds a new `delegates*` (e.g.: `delegatesAriaLabel`, `delegatesAriaDescribedBy`) options to the `.attachShadow` method similarly to the `delegatesFocus`, while introducing a new content attribute `auto*` (e.g.: `autoarialabel`, `autoariadescribedby`) to be used in the shadowroot inner elements. This has an advantage that it works with Declarative Shadow DOM as well, and it is consistent with `delegatesFocus`. Even though, it requires another set of html attributes in the declarative shadow root template. The declarative form works better with common developer paradigm where you may not necessarily have access to a DOM node right where you're creating / declaring it.
 
   <aside class="example" title="How to use it">
     
@@ -116,24 +114,24 @@ Conforming user agents MUST implement the following IDL interface.
   };
 </pre>
     
-Interfaces that include <code>AutoARIAMixin</code> must provide the following algorithms:
+Interfaces that include `AutoARIAMixin` must provide the following algorithms:
 
-- <dfn><code>AutoARIAMixin</code> getter steps</dfn>, which take the host interface instance, IDL attribute name, and content attribute name, and must return a string value; and
-- <dfn><code>AutoARIAMixin</code> setter steps</dfn>, which take the host interface instance, IDL attribute name, content attribute name, and string value, and must return nothing.
+- <dfn>`AutoARIAMixin` getter steps</dfn>, which take the host interface instance, IDL attribute name, and content attribute name, and must return a string value; and
+- <dfn>`AutoARIAMixin` setter steps</dfn>, which take the host interface instance, IDL attribute name, content attribute name, and string value, and must return nothing.
 
-For every IDL attribute <var>idlAttribute</var> defined in <code>AutoARIAMixin</code>, on getting, it must perform the following steps:
+For every IDL attribute <var>idlAttribute</var> defined in `AutoARIAMixin`, on getting, it must perform the following steps:
 
 1. Let <var>contentAttribute</var> be the AutoARIA content attribute determined by looking up <var>idlAttribute</var> in the AutoARIA Attribute Correspondence table.
-1. Return the result of running the <a><code>AutoARIAMixin</code> getter steps</a>, given this, <var>idlAttribute</var>, and <var>contentAttribute</var>.
+1. Return the result of running the <a>`AutoARIAMixin` getter steps</a>, given this, <var>idlAttribute</var>, and <var>contentAttribute</var>.
 
 Similarly, on setting, it must perform the following steps:
 
 1. Let <var>contentAttribute</var> be the AutoARIA content attribute determined by looking up <var>idlAttribute</var> in the AutoARIA Attribute Correspondence table.
-1. Run the <a><code>AutoARIAMixin</code> setter steps</a>, given this, <var>idlAttribute</var>, <var>contentAttribute</var>, and the given value.
+1. Run the <a>`AutoARIAMixin` setter steps</a>, given this, <var>idlAttribute</var>, <var>contentAttribute</var>, and the given value.
 
 ## AutoARIA Attribute Correspondence
 
-The following table provides a correspondence between IDL attribute names and content attribute names, for use by <code>AutoARIAMixin</code>.
+The following table provides a correspondence between IDL attribute names and content attribute names, for use by `AutoARIAMixin`.
 
 <table>
   <tr><th>IDL Attribute</th><th>Reflected AutoARIA Content Attribute</th></tr>
@@ -179,20 +177,22 @@ The following table provides a correspondence between IDL attribute names and co
   <tr><td><dfn>autoAriaValueText</dfn></td><td><pref>autoariavaluetext</pref></td></tr>
 </table>
 
-## <code>AutoARIAMixin</code> Mixed in to <code>Element</code>
+## `AutoARIAMixin` Mixed in to `Element`
 
-User agents MUST include <code>AutoARIAMixin</code> on <code>Element</code>:
+User agents MUST include `AutoARIAMixin` on `Element`:
 
 <pre class="idl">
   Element includes AutoARIAMixin;
 </pre>
 
- For <code>Element</code>:
+For `Element`:
   
-- The <a><code>AutoARIAMixin</code> getter steps</a> given <var>element</var>, <var>idlAttribute</var>, and <var>contentAttribute</var> are to return the result of the getter algorithm for <var>idlAttribute</var> <a href="https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflect">reflecting<<var>contentAttribute</var> on <var>element</var>.
-- The <a><code>AutoARIAMixin</code> setter steps</a> given <var>element</var>, <var>idlAttribute</var>, <var>contentAttribute</var>, and <var>value</var> are to perform the setter algorithm for <var>idlAttribute</var> <a href="https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflect">reflecting</a> <var>contentAttribute</var> on <var>element</var>, given <var>value</var>.
+- The <a>`AutoARIAMixin` getter steps</a> given <var>element</var>, <var>idlAttribute</var>, and <var>contentAttribute</var> are to return the result of the getter algorithm for <var>idlAttribute</var> <a href="https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflect">reflecting<<var>contentAttribute</var> on <var>element</var>.
+- The <a>`AutoARIAMixin` setter steps</a> given <var>element</var>, <var>idlAttribute</var>, <var>contentAttribute</var>, and <var>value</var> are to perform the setter algorithm for <var>idlAttribute</var> <a href="https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflect">reflecting</a> <var>contentAttribute</var> on <var>element</var>, given <var>value</var>.
 
-Note: In practice, this means that, e.g., the <code>autoAriaAtomic</code> IDL on <code>Element</code> reflects the <code>autoariaatomic</code> content attribute;
+Note: In practice, this means that, e.g., the `autoAriaAtomic` IDL on `Element` reflects the `autoariaatomic` content attribute;
+
+---
 
 ## Interface Mixin <dfn>ShadowRootMixin</dfn>
 
@@ -241,24 +241,24 @@ Note: In practice, this means that, e.g., the <code>autoAriaAtomic</code> IDL on
   };
 </pre>
 
-Interfaces that include <code>ShadowRootMixin</code> must provide the following algorithms:
+Interfaces that include `ShadowRootMixin` must provide the following algorithms:
 
-- <dfn><code>ShadowRootMixin</code> getter steps</dfn>, which take the host interface instance, IDL attribute name, and content attribute name, and must return a string value; and
-- <dfn><code>ShadowRootMixin</code> setter steps</dfn>, which take the host interface instance, IDL attribute name, content attribute name, and string value, and must return nothing.
+- <dfn>`ShadowRootMixin` getter steps</dfn>, which take the host interface instance, IDL attribute name, and content attribute name, and must return a string value; and
+- <dfn>`ShadowRootMixin` setter steps</dfn>, which take the host interface instance, IDL attribute name, content attribute name, and string value, and must return nothing.
 
-For every IDL attribute <var>idlAttribute</var> defined in <code>ShadowRootMixin</code>, on getting, it must perform the following steps:
+For every IDL attribute <var>idlAttribute</var> defined in `ShadowRootMixin`, on getting, it must perform the following steps:
 
 1. Let <var>contentAttribute</var> be the AutoARIA content attribute determined by looking up <var>idlAttribute</var> in the AutoARIA Attribute Correspondence table.
-1. Return the result of running the <a><code>ShadowRootMixin</code> getter steps</a>, given this, <var>idlAttribute</var>, and <var>contentAttribute</var>.
+1. Return the result of running the <a>`ShadowRootMixin` getter steps</a>, given this, <var>idlAttribute</var>, and <var>contentAttribute</var>.
 
 Similarly, on setting, it must perform the following steps:
 
 1. Let <var>contentAttribute</var> be the AutoARIA content attribute determined by looking up <var>idlAttribute</var> in the AutoARIA Attribute Correspondence table.
-1. Run the <a><code>ShadowRootMixin</code> setter steps</a>, given this, <var>idlAttribute</var>, <var>contentAttribute</var>, and the given value.
+1. Run the <a>`ShadowRootMixin` setter steps</a>, given this, <var>idlAttribute</var>, <var>contentAttribute</var>, and the given value.
 
 ## ShadowRoot Attribute Correspondence
 
-The following table provides a correspondence between IDL attribute names and content attribute names, for use by <code>ShadowRootMixin</code>.
+The following table provides a correspondence between IDL attribute names and content attribute names, for use by `ShadowRootMixin`.
 
 <table>
   <tr><th>IDL Attribute</th><th>Reflected ShadowRoot Content Attribute</th></tr>
@@ -304,27 +304,25 @@ The following table provides a correspondence between IDL attribute names and co
   <tr><td><dfn>delegatesAriaValueText</dfn></td><td><pref>delegatesariavaluetext</pref></td></tr>
 </table>
 
-## <code>ShadowRootMixin</code> Mixed in to <code>ShadowRoot</code>
+## `ShadowRootMixin` Mixed in to `ShadowRoot`
 
-User agents MUST include <code>ShadowRootMixin</code> on <code>ShadowRoot</code>:
+User agents MUST include `ShadowRootMixin` on `ShadowRoot`:
 
 <pre class="idl">
   ShadowRoot includes ShadowRootMixin;
 </pre>
 
- For <code>ShadowRoot</code>:
+ For `ShadowRoot`:
   
-- The <a><code>ShadowRootMixin</code> getter steps</a> given <var>element</var>, <var>idlAttribute</var>, and <var>contentAttribute</var> are to return the result of the getter algorithm for <var>idlAttribute</var> <a href="https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflect">reflecting<<var>contentAttribute</var> on <var>element</var>.
-- The <a><code>ShadowRootMixin</code> setter steps</a> given <var>element</var>, <var>idlAttribute</var>, <var>contentAttribute</var>, and <var>value</var> are to perform the setter algorithm for <var>idlAttribute</var> <a href="https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflect">reflecting</a> <var>contentAttribute</var> on <var>element</var>, given <var>value</var>.
+- The <a>`ShadowRootMixin` getter steps</a> given <var>element</var>, <var>idlAttribute</var>, and <var>contentAttribute</var> are to return the result of the getter algorithm for <var>idlAttribute</var> <a href="https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflect">reflecting<<var>contentAttribute</var> on <var>element</var>.
+- The <a>`ShadowRootMixin` setter steps</a> given <var>element</var>, <var>idlAttribute</var>, <var>contentAttribute</var>, and <var>value</var> are to perform the setter algorithm for <var>idlAttribute</var> <a href="https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflect">reflecting</a> <var>contentAttribute</var> on <var>element</var>, given <var>value</var>.
 
-Note: In practice, this means that, e.g., the <code>delegatesAriaAtomic</code> IDL on <code>ShadowRoot</code> reflects the <code>delegatesariaatomic</code> content attribute; etc
+Note: In practice, this means that, e.g., the `delegatesAriaAtomic` IDL on `ShadowRoot` reflects the `delegatesariaatomic` content attribute; etc
 
 ## ShadowRootExtInit
 
 <pre class="idl">
   [Exposed=Window]
-  ShadowRoot attachShadow(ShadowRootExtInit init);
-
   dictionary ShadowRootExtInit: ShadowRootInit {
     boolean delegatesAriaDescribedBy = false;
     boolean delegatesAriaAtomic = false;
@@ -370,12 +368,20 @@ Note: In practice, this means that, e.g., the <code>delegatesAriaAtomic</code> I
   };
 </pre>
 
+## attachShadow Signature
+
+User agents MUST update the attachShadow method signature in the <code>Element</code> with the ShadowRootExtInit option, as the following:
+
+<pre>
+  ShadowRoot attachShadow(ShadowRootExtInit init);
+</pre>
+
 ## attachShadow Extension
 
-<p>The <dfn method for=Element><code>attachShadow(<var>init</var>)</code></dfn> method steps have their last 2 steps with:
+<p>The `attachShadow` method steps have their last 2 steps with:
 
 <ol>
-  <li><p>Set each attribute <var>name</var> in the [[#delegates-correspondence]] table into <var>shadow</var> to the corresponding <var>init</var>[delegates attribute].
+  <li><p>Set each attribute in the [[#delegates-correspondence]] table into <var>shadow</var> to the corresponding <var>init</var>[delegates attribute].
 
   <li><p>Set <a>this</a>'s <a for=Element>shadow root</a> to <var>shadow</var>.
 
@@ -389,58 +395,58 @@ Note: In practice, this means that, e.g., the <code>delegatesAriaAtomic</code> I
     <tr><th>Attribute</th><th>Delegates</th></tr>
   </thead>
   <tbody>
-    <tr><td>delegates ariaDescribedBy</td><td><dfn>delegatesAriaDescribedBy</dfn></td></tr>
-    <tr><td>delegates ariaAtomic</td><td><dfn>delegatesAriaAtomic</dfn></td></tr>
-    <tr><td>delegates ariaAutoComplete</td><td><dfn>delegatesAriaAutoComplete</dfn></td></tr>
-    <tr><td>delegates ariaBusy</td><td><dfn>delegatesAriaBusy</dfn></td></tr>
-    <tr><td>delegates ariaChecked</td><td><dfn>delegatesAriaChecked</dfn></td></tr>
-    <tr><td>delegates ariaColCount</td><td><dfn>delegatesAriaColCount</dfn></td></tr>
-    <tr><td>delegates ariaColIndex</td><td><dfn>delegatesAriaColIndex</dfn></td></tr>
-    <tr><td>delegates ariaColIndexText</td><td><dfn>delegatesAriaColIndexText</dfn></td></tr>
-    <tr><td>delegates ariaColSpan</td><td><dfn>delegatesAriaColSpan</dfn></td></tr>
-    <tr><td>delegates ariaCurrent</td><td><dfn>delegatesAriaCurrent</dfn></td></tr>
-    <tr><td>delegates ariaDescription</td><td><dfn>delegatesAriaDescription</dfn></td></tr>
-    <tr><td>delegates ariaDisabled</td><td><dfn>delegatesAriaDisabled</dfn></td></tr>
-    <tr><td>delegates ariaExpanded</td><td><dfn>delegatesAriaExpanded</dfn></td></tr>
-    <tr><td>delegates ariaHasPopup</td><td><dfn>delegatesAriaHasPopup</dfn></td></tr>
-    <tr><td>delegates ariaHidden</td><td><dfn>delegatesAriaHidden</dfn></td></tr>
-    <tr><td>delegates ariaInvalid</td><td><dfn>delegatesAriaInvalid</dfn></td></tr>
-    <tr><td>delegates ariaKeyShortcuts</td><td><dfn>delegatesAriaKeyShortcuts</dfn></td></tr>
-    <tr><td>delegates ariaLabel</td><td><dfn>delegatesAriaLabel</dfn></td></tr>
-    <tr><td>delegates ariaLevel</td><td><dfn>delegatesAriaLevel</dfn></td></tr>
-    <tr><td>delegates ariaLive</td><td><dfn>delegatesAriaLive</dfn></td></tr>
-    <tr><td>delegates ariaModal</td><td><dfn>delegatesAriaModal</dfn></td></tr>
-    <tr><td>delegates ariaMultiLine</td><td><dfn>delegatesAriaMultiLine</dfn></td></tr>
-    <tr><td>delegates ariaMultiSelectable</td><td><dfn>delegatesAriaMultiSelectable</dfn></td></tr>
-    <tr><td>delegates ariaOrientation</td><td><dfn>delegatesAriaOrientation</dfn></td></tr>
-    <tr><td>delegates ariaPlaceholder</td><td><dfn>delegatesAriaPlaceholder</dfn></td></tr>
-    <tr><td>delegates ariaPosInSet</td><td><dfn>delegatesAriaPosInSet</dfn></td></tr>
-    <tr><td>delegates ariaPressed</td><td><dfn>delegatesAriaPressed</dfn></td></tr>
-    <tr><td>delegates ariaReadOnly</td><td><dfn>delegatesAriaReadOnly</dfn></td></tr>
-    <tr><td>delegates ariaRequired</td><td><dfn>delegatesAriaRequired</dfn></td></tr>
-    <tr><td>delegates ariaRoleDescription</td><td><dfn>delegatesAriaRoleDescription</dfn></td></tr>
-    <tr><td>delegates ariaRowCount</td><td><dfn>delegatesAriaRowCount</dfn></td></tr>
-    <tr><td>delegates ariaRowIndex</td><td><dfn>delegatesAriaRowIndex</dfn></td></tr>
-    <tr><td>delegates ariaRowIndexText</td><td><dfn>delegatesAriaRowIndexText</dfn></td></tr>
-    <tr><td>delegates ariaRowSpan</td><td><dfn>delegatesAriaRowSpan</dfn></td></tr>
-    <tr><td>delegates ariaSelected</td><td><dfn>delegatesAriaSelected</dfn></td></tr>
-    <tr><td>delegates ariaSetSize</td><td><dfn>delegatesAriaSetSize</dfn></td></tr>
-    <tr><td>delegates ariaSort</td><td><dfn>delegatesAriaSort</dfn></td></tr>
-    <tr><td>delegates ariaValueMax</td><td><dfn>delegatesAriaValueMax</dfn></td></tr>
-    <tr><td>delegates ariaValueMin</td><td><dfn>delegatesAriaValueMin</dfn></td></tr>
-    <tr><td>delegates ariaValueNow</td><td><dfn>delegatesAriaValueNow</dfn></td></tr>
-    <tr><td>delegates ariaValueText</td><td><dfn>delegatesAriaValueText</dfn></td></tr>
+    <tr><td>delegates ariaDescribedBy</td><td>delegatesAriaDescribedBy</td></tr>
+    <tr><td>delegates ariaAtomic</td><td>delegatesAriaAtomic</td></tr>
+    <tr><td>delegates ariaAutoComplete</td><td>delegatesAriaAutoComplete</td></tr>
+    <tr><td>delegates ariaBusy</td><td>delegatesAriaBusy</td></tr>
+    <tr><td>delegates ariaChecked</td><td>delegatesAriaChecked</td></tr>
+    <tr><td>delegates ariaColCount</td><td>delegatesAriaColCount</td></tr>
+    <tr><td>delegates ariaColIndex</td><td>delegatesAriaColIndex</td></tr>
+    <tr><td>delegates ariaColIndexText</td><td>delegatesAriaColIndexText</td></tr>
+    <tr><td>delegates ariaColSpan</td><td>delegatesAriaColSpan</td></tr>
+    <tr><td>delegates ariaCurrent</td><td>delegatesAriaCurrent</td></tr>
+    <tr><td>delegates ariaDescription</td><td>delegatesAriaDescription</td></tr>
+    <tr><td>delegates ariaDisabled</td><td>delegatesAriaDisabled</td></tr>
+    <tr><td>delegates ariaExpanded</td><td>delegatesAriaExpanded</td></tr>
+    <tr><td>delegates ariaHasPopup</td><td>delegatesAriaHasPopup</td></tr>
+    <tr><td>delegates ariaHidden</td><td>delegatesAriaHidden</td></tr>
+    <tr><td>delegates ariaInvalid</td><td>delegatesAriaInvalid</td></tr>
+    <tr><td>delegates ariaKeyShortcuts</td><td>delegatesAriaKeyShortcuts</td></tr>
+    <tr><td>delegates ariaLabel</td><td>delegatesAriaLabel</td></tr>
+    <tr><td>delegates ariaLevel</td><td>delegatesAriaLevel</td></tr>
+    <tr><td>delegates ariaLive</td><td>delegatesAriaLive</td></tr>
+    <tr><td>delegates ariaModal</td><td>delegatesAriaModal</td></tr>
+    <tr><td>delegates ariaMultiLine</td><td>delegatesAriaMultiLine</td></tr>
+    <tr><td>delegates ariaMultiSelectable</td><td>delegatesAriaMultiSelectable</td></tr>
+    <tr><td>delegates ariaOrientation</td><td>delegatesAriaOrientation</td></tr>
+    <tr><td>delegates ariaPlaceholder</td><td>delegatesAriaPlaceholder</td></tr>
+    <tr><td>delegates ariaPosInSet</td><td>delegatesAriaPosInSet</td></tr>
+    <tr><td>delegates ariaPressed</td><td>delegatesAriaPressed</td></tr>
+    <tr><td>delegates ariaReadOnly</td><td>delegatesAriaReadOnly</td></tr>
+    <tr><td>delegates ariaRequired</td><td>delegatesAriaRequired</td></tr>
+    <tr><td>delegates ariaRoleDescription</td><td>delegatesAriaRoleDescription</td></tr>
+    <tr><td>delegates ariaRowCount</td><td>delegatesAriaRowCount</td></tr>
+    <tr><td>delegates ariaRowIndex</td><td>delegatesAriaRowIndex</td></tr>
+    <tr><td>delegates ariaRowIndexText</td><td>delegatesAriaRowIndexText</td></tr>
+    <tr><td>delegates ariaRowSpan</td><td>delegatesAriaRowSpan</td></tr>
+    <tr><td>delegates ariaSelected</td><td>delegatesAriaSelected</td></tr>
+    <tr><td>delegates ariaSetSize</td><td>delegatesAriaSetSize</td></tr>
+    <tr><td>delegates ariaSort</td><td>delegatesAriaSort</td></tr>
+    <tr><td>delegates ariaValueMax</td><td>delegatesAriaValueMax</td></tr>
+    <tr><td>delegates ariaValueMin</td><td>delegatesAriaValueMin</td></tr>
+    <tr><td>delegates ariaValueNow</td><td>delegatesAriaValueNow</td></tr>
+    <tr><td>delegates ariaValueText</td><td>delegatesAriaValueText</td></tr>
   </tbody>
 </table>
 
-<section id="index" class="appendix">
-  # Appendix 
+  <section id="index" class="appendix">
+    # Appendix 
 
-  ## Original Threads
+    ## Original Threads
 
-  - <a href="https://w3c.github.io/webcomponents-cg/#cross-root-aria">Public summary from WCCG</a>
-  - <a href="https://github.com/WICG/aom/issues/169">WICG/aom#169</a>
-  - <a href="https://github.com/WICG/aom/issues/107">WICG/aom#107</a>
-  - <a href="https://github.com/WICG/webcomponents/issues/917">WICG/webcomponents#917</a>
-  - <a href="https://github.com/WICG/webcomponents/issues/916">WICG/webcomponents#916</a>
-</section>
+    - <a href="https://w3c.github.io/webcomponents-cg/#cross-root-aria">Public summary from WCCG</a>
+    - <a href="https://github.com/WICG/aom/issues/169">WICG/aom#169</a>
+    - <a href="https://github.com/WICG/aom/issues/107">WICG/aom#107</a>
+    - <a href="https://github.com/WICG/webcomponents/issues/917">WICG/webcomponents#917</a>
+    - <a href="https://github.com/WICG/webcomponents/issues/916">WICG/webcomponents#916</a>
+  </section>
