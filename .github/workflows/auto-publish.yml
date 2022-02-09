@@ -14,13 +14,13 @@ jobs:
 
       - name: Output to HTML
         uses: netwerk-digitaal-erfgoed/bikeshed-action@v1
-
-      - name: Where is my file
-        run: ls -lsa index*  
+        with:
+          source: index.bs
+          destination: public/index.html
 
       - name: Publish HTML to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: ./public
