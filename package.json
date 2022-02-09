@@ -1,0 +1,20 @@
+{
+  "name": "cross-root-aria-delegation",
+  "version": "1.0.0",
+  "description": "Cross-root ARIA Delegation Proposal",
+  "main": "index.js",
+  "scripts": {
+    "test": "respec-validator index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leobalter/cross-root-aria-delegation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leobalter/cross-root-aria-delegation/issues"
+  },
+  "homepage": "https://github.com/leobalter/cross-root-aria-delegation#readme"
+}
