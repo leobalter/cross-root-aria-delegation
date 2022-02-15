@@ -1,6 +1,7 @@
 # Cross-root ARIA Delegation API explainer
 
-source: https://github.com/WICG/webcomponents/issues/917
+- [source](https://github.com/WICG/webcomponents/issues/917)
+- [**WIP** spec draft](https://leobalter.github.io/cross-root-aria-delegation/)
 
 Content on the web be accessible is critically important. Maintaining accessibility within web components is challenging as the shadow root encapsulation prevents references between elements in different roots. These references are fundamental to enable assistive technologies within web applications.
 
