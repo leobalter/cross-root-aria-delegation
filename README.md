@@ -1,5 +1,7 @@
 # Cross-root ARIA
 
+- [**WIP** Spec draft](https://leobalter.github.io/cross-root-aria-delegation/)
+
 ## Public summary from WCCG
 
 https://w3c.github.io/webcomponents-cg/#cross-root-aria
