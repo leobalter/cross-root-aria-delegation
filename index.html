@@ -1223,7 +1223,7 @@ Possible extra rowspan handling
 </style>
   <meta content="Bikeshed version 5f7b0e20, updated Tue Aug 18 15:46:28 2020 -0700" name="generator">
   <link href="https://leobalter.github.io/cross-root-aria-delegation/" rel="canonical">
-  <meta content="50575b26d3b4ddec3aeb83847f59a940dd4e5432" name="document-revision">
+  <meta content="b7231e406874e2ad6138c50dd5889925749ff001" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -1561,17 +1561,19 @@ Parts of this work may be from another specification document.  If so, those par
     <p>This proposal introduces a delegation API to allow for ARIA attributes and properties set on a Web Component to be forwarded to elements inside of its shadowroot.</p>
     <p>This mechanism will allow users to apply standard best practices for ARIA and resolve a large margin of accessibility use cases for applications of native Web components and native Shadow DOM. This API is most suited for one-to-one delegation, but should also work for one-to-many scenarios. There is no mechanism for directly relating two elements in different shadowroots together, but this will still be possible manually with the element reflection API.</p>
     <p>The proposed extension adds a new `delegates*` (e.g.: `delegatesAriaLabel`, `delegatesAriaDescribedBy`) options to the `.attachShadow` method similarly to the `delegatesFocus`, while introducing a new content attribute `auto*` (e.g.: `autoarialabel`, `autoariadescribedby`) to be used in the shadowroot inner elements. This has an advantage that it works with Declarative Shadow DOM as well, and it is consistent with `delegatesFocus`. Even though, it requires another set of html attributes in the declarative shadow root template. The declarative form works better with common developer paradigm where you may not necessarily have access to a DOM node right where you’re creating / declaring it.</p>
-    <aside class="example" id="example-b196ddd5" title="How to use it">
-     <a class="self-link" href="#example-b196ddd5"></a> 
+    <aside class="example" id="example-e936c05e" title="How to use it">
+     <a class="self-link" href="#example-e936c05e"></a> 
      <p>The ARIA attributes assigned in the host x-foo are delegated to inner elements inside the component’s shadowroot. Today, custom code can reflect this application but synthetically applying the aria attributes and their effects to both the host x-foo and its inner elements.</p>
-<pre class="highlight"><c- p>&lt;</c-><c- f>span</c-> <c- e>id</c-><c- o>=</c-><c- s>"foo"</c-><c- p>></c->Description!<c- p>&lt;/</c-><c- f>span</c-><c- p>></c->
-<c- p>&lt;</c-><c- f>x-foo</c-> <c- e>aria-label</c-><c- o>=</c-><c- s>"Hello!"</c-> <c- e>aria-describedby</c-><c- o>=</c-><c- s>"foo"</c-><c- p>></c->
-  #shadow-root
-    <c- p>&lt;</c-><c- f>input</c-> <c- e>id</c-><c- o>=</c-><c- s>"input"</c-> <c- e>autoarialabel</c-> <c- e>autoariadescribedby</c-> <c- p>/></c->
-    <c- p>&lt;</c-><c- f>span</c-> <c- e>autoarialabel</c-><c- p>></c->Another target<c- p>&lt;/</c-><c- f>span</c-><c- p>></c->
-<c- p>&lt;/</c-><c- f>x-foo</c-><c- p>></c->
+<pre class="highlight"><c- p>&lt;</c-><c- f>template</c-> <c- e>id</c-><c- o>=</c-><c- s>"template1"</c-><c- p>></c->
+  <c- p>&lt;</c-><c- f>input</c-> <c- e>id</c-><c- o>=</c-><c- s>"input"</c-> <c- e>autoarialabel</c-> <c- e>autoariadescribedby</c-> <c- p>/></c->
+  <c- p>&lt;</c-><c- f>span</c-> <c- e>autoarialabel</c-><c- p>></c->Another target<c- p>&lt;/</c-><c- f>span</c-><c- p>></c->
+<c- p>&lt;/</c-><c- f>template</c-><c- p>></c->
+<c- p>&lt;</c-><c- f>span</c-> <c- e>id</c-><c- o>=</c-><c- s>"foo"</c-><c- p>></c->Description!<c- p>&lt;/</c-><c- f>span</c-><c- p>></c->
+<c- p>&lt;</c-><c- f>x-foo</c-> <c- e>aria-label</c-><c- o>=</c-><c- s>"Hello!"</c-> <c- e>aria-describedby</c-><c- o>=</c-><c- s>"foo"</c-><c- p>>&lt;/</c-><c- f>x-foo</c-><c- p>></c->
 </pre>
-<pre class="highlight"><c- kr>export</c-> <c- kr>class</c-> XFoo <c- kr>extends</c-> HTMLElement <c- p>{</c->
+<pre class="highlight"><c- kr>const</c-> template <c- o>=</c-> document<c- p>.</c->getElementById<c- p>(</c-><c- t>'template1'</c-><c- p>);</c->
+
+<c- kr>class</c-> XFoo <c- kr>extends</c-> HTMLElement <c- p>{</c->
   constructor<c- p>()</c-> <c- p>{</c->
     <c- kr>super</c-><c- p>();</c->
     <c- k>this</c-><c- p>.</c->attachShadow<c- p>({</c-> mode<c- o>:</c-> <c- u>"open"</c-><c- p>,</c-> delegatesAriaLabel<c- o>:</c-> <c- kc>true</c-><c- p>,</c-> delegatesAriaDescribedBy<c- o>:</c-> <c- kc>true</c-> <c- p>});</c->
