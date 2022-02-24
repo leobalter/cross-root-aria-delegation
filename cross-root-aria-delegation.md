@@ -24,15 +24,17 @@ The proposed extension adds a new `delegates*` (e.g.: `delegatesAriaLabel`, `del
 
 ```html
 <span id="foo">Description!</span>
-<x-foo aria-label="Hello!" aria-describedby="foo">
-  #shadow-root
-    <input id="input" autoarialabel autoariadescribedby />
-    <span autoarialabel>Another target</span>
-</x-foo>
+<template id="template1">
+  <input id="input" autoarialabel autoariadescribedby />
+  <span autoarialabel>Another target</span>
+</template>
+<x-foo aria-label="Hello!" aria-describedby="foo"></x-foo>
 ```
 
 ```html
-export class XFoo extends HTMLElement {
+const template = document.getElementById('template1');
+
+class XFoo extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open", delegatesAriaLabel: true, delegatesAriaDescribedBy: true });

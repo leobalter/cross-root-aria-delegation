@@ -36,16 +36,18 @@ Today, a web application can be composed by many web components that are connect
     The ARIA attributes assigned in the host x-foo are delegated to inner elements inside the component's shadowroot. Today, custom code can reflect this application but synthetically applying the aria attributes and their effects to both the host x-foo and its inner elements.
     
     <pre highlight="html">
+      &lt;template id="template1">
+        &lt;input id="input" autoarialabel autoariadescribedby />
+        &lt;span autoarialabel>Another target&lt;/span>
+      &lt;/template>
       &lt;span id="foo">Description!&lt;/span>
-      &lt;x-foo aria-label="Hello!" aria-describedby="foo">
-        #shadow-root
-          &lt;input id="input" autoarialabel autoariadescribedby />
-          &lt;span autoarialabel>Another target&lt;/span>
-      &lt;/x-foo>
+      &lt;x-foo aria-label="Hello!" aria-describedby="foo">&lt;/x-foo>
     </pre>
 
     <pre highlight="js">
-      export class XFoo extends HTMLElement {
+      const template = document.getElementById('template1');
+
+      class XFoo extends HTMLElement {
         constructor() {
           super();
           this.attachShadow({ mode: "open", delegatesAriaLabel: true, delegatesAriaDescribedBy: true });
