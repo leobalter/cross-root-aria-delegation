@@ -99,6 +99,12 @@ For now, consistency is being preserved, but otherwise the ARIA delegation attri
 
 # Appendix
 
+## No silver bullet
+
+Not all cross-shadow use cases are covered. Cases like radio groups, tab groups, or combobox might require complexity that is not available yet at this current cross-root delegation API.
+
+The delegation API might also not resolve attributions from multiple shadow roots in parallel or attributes that would point to DOM trees containing the current host component.
+
 ## Thoughts: attribute names are too long
 
 The attributes names such as `shadowrootdelegates*` are very long and some consideration for shorter names by removing the `shadowroot` prefix can be discussed as long the discussion is sync'ed with the stakeholders of the respective Declarative Shadow DOM proposal.
