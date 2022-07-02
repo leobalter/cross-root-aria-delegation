@@ -113,7 +113,7 @@ The attributes names such as `shadowrootdelegates*` are very long and some consi
 
 ## OpenUICG Popup API
 
-The OpenUICG is developing an API to support content that popsup over a page that a delegation API as outlined so far may benefit. In particularly, it can support better ergonomics on the API that they have currently documented for [using the new attributes in shadow DOM]. 
+The OpenUICG is developing an API to support content that popsup over a page that a delegation API as outlined so far may benefit. In particularly, it can support better ergonomics on the API that they have currently documented for [using the new attributes in shadow DOM](https://open-ui.org/components/popup.research.explainer#shadow-dom). 
 
 ```html 
 <my-tooltip popup=hint>
