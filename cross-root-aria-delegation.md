@@ -113,10 +113,7 @@ The attributes names such as `shadowrootdelegates*` are very long and some consi
 
 ## OpenUICG Popup API
 
-The OpenUICG is developing an API to support content that popsup over a page that has two ways 
-in which is might relate to a reflection/delegation API as we've outlined so far for ARIA attributes.
-First, it may support better ergonomics on the API that they have currently documented for [using
-the new attributes in shadow DOM]. 
+The OpenUICG is developing an API to support content that popsup over a page that a delegation API as outlined so far may benefit. In particularly, it can support better ergonomics on the API that they have currently documented for [using the new attributes in shadow DOM]. 
 
 ```html 
 <my-tooltip popup=hint>
@@ -127,7 +124,7 @@ the new attributes in shadow DOM].
 </my-tooltip>
 ```
 
-With this small change to their implementation, you'd _theoretically_ be able to access the
+With this small change to their implementation, you'd be able to access the
 `.showPopUp()` method directly on the `<my-tooltip>` element, but have it act on the `<div>` within 
 the shadow root without having to map those methods yourself. While their original example shield 
 the parent application/component from sprouted attributes, adding `popup` to the `ElementInternals` 
