@@ -111,6 +111,76 @@ The delegation API might also not resolve attributions from multiple shadow root
 
 The attributes names such as `shadowrootdelegates*` are very long and some consideration for shorter names by removing the `shadowroot` prefix can be discussed as long the discussion is sync'ed with the stakeholders of the respective Declarative Shadow DOM proposal.
 
+## Non-"aria" attributes
+
+### OpenUICG Popup API
+
+The OpenUICG is developing an API to support content that popsup over a page that a delegation API as outlined so far may benefit. In particularly, it can support better ergonomics on the API that they have currently documented for [using the new attributes in shadow DOM](https://open-ui.org/components/popup.research.explainer#shadow-dom). 
+
+```html 
+<my-tooltip popup=hint>
+    <template shadowroot=closed delegates="popup">
+      <div autopopup>This is a tooltip: <slot></slot></div>
+    </template>
+    Tooltip text here!
+</my-tooltip>
+```
+
+With this small change to their implementation, you'd be able to access the
+`.showPopUp()` method directly on the `<my-tooltip>` element, but have it act on the `<div>` within 
+the shadow root without having to map those methods yourself. While their original example shield 
+the parent application/component from sprouted attributes, adding `popup` to the `ElementInternals` 
+dictionary, could allow for the best of both worlds.
+
+### CSS Anchored Positioning
+
+The current proposal for [CSS Anchored Positioning](https://github.com/MicrosoftEdge/MSEdgeExplainers/blob/main/CSSAnchoredPositioning/explainer.md) leveraged the `anchor` attribute with in ID Reference to bind the position on one element to another:
+
+```html
+<button id="myButton" popup="myPopup">Anchor</button>
+<div id="myPopup" anchor="myButton" popup="auto">Anchored element</div>
+<style>
+    #myPopup {
+        position: fixed;
+        position-set: buttonMenuPos;
+    }
+
+    @position-set buttonMenuPos {
+        // ...
+    }
+</style>
+```
+
+Decorating these elements with custom element wrappers for style encapsulation, addition DOM interlevening, etc. would require delegation of the `anchor` attribute to work correctly:
+
+```html
+<x-button popup="myPopup" id="myButton">
+  <template shadowroot="open" delegates="popup">
+    <button auto="popup"><slot></slot></button>
+    <svg><!-- Popup Icon --></svg>
+  </template>
+  Anchor
+</x-button>
+<x-popup id="myPopup" anchor="myButton">
+  <template shadowroot="open" delegates="anchor popup">
+    <style>
+      div {
+        position: fixed;
+        position-set: buttonMenuPos;
+      }
+
+      @position-set buttonMenuPos {
+        // ...
+      }
+    </style>
+    <div popup="auto" auto-anchor auto-popup>
+      <slot></slot>
+      <button aria-label="Close popup">x</button>
+    </div>
+  </template>
+  Anchored element
+</x-popup>
+```
 
 ## Public summary from WCCG
 
