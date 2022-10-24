@@ -296,7 +296,7 @@ When you start dealing with nested shadow trees things get more complicated. We 
 
 ## Issues
 
-### Generic proposal (not only for ARIA attributes)
+### Generic proposal ([issue #13](https://github.com/leobalter/cross-root-aria-delegation/issues/13))
 
 There are more IDREF attributes apart from ARIA ones.
 
@@ -316,7 +316,9 @@ Example:
 
 Here we cannot set the relationship between the external `label` and the inner `input` element. A similar thing can happen in the opposite direction with a custom label referencing an input outside the shadow tree.
 
-There are other cases, like the [Pop Up](https://open-ui.org/components/popup.research.explainer) proposal by Open UI, that adds some new attributes `popuptoggletarget`, `popupshowtarget` and `popuphidetarget` that also reference to other elements.
+There are other cases that also reference to other elements:
+* [`list`](https://html.spec.whatwg.org/multipage/input.html#attr-input-list) attribute in `input`.
+* [Pop Up](https://open-ui.org/components/popup.research.explainer) proposal by Open UI, that adds some new attributes `popuptoggletarget`, `popupshowtarget` and `popuphidetarget`.
 
 Should we look for a solution that is generic enough to cover these cases too?
 
