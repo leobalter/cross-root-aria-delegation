@@ -150,7 +150,7 @@ customElements.define("x-foo", XFoo);
 
 In the examples above, the ARIA attributes assigned in the host `x-foo` are delegated to inner elements inside the custom element's shadow tree. Today, custom code can reflect this application but synthetically applying the aria attributes and their effects to both the host `x-foo` and its inner elements.
 
-#### Syntax
+#### Syntax ([issue #3](https://github.com/leobalter/cross-root-aria-delegation/issues/3))
 
 This proposal was originally named Cross-root ARIA Delegation, as it's somehow based in the same concept than [`delegatesFocus`](https://dom.spec.whatwg.org/#dom-shadowroot-delegatesfocus). We could discuss about the final name and think if there are better alternatives for this case. Maybe "import" or maybe other words we can think about.
 
