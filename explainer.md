@@ -213,7 +213,6 @@ Example:
 </x-input>
 ```
 
-
 ### 2. Export elements
 
 There could be different approaches to deal with this issue.
@@ -292,6 +291,10 @@ On a similar fashion, but using a new attribute we could define something like a
 One problem with this idea is that `exportids` is defined in the shadow host (like `exportparts`). When using the custom element we'd need to know the internal ids, similar to how we need to know the available parts for styling. Another issue is that each time we use the custom element we have to set this, which might be not nice.
 
 When you start dealing with nested shadow trees things get more complicated. We have to review the proposals so they can work in those cases too.
+
+### Combination of both proposals (issue #4)
+
+Once we have an agreement about the proposals for each problem it would be nice to see how they can work together in some more complex use cases.
 
 
 ## Issues
