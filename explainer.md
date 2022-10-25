@@ -152,7 +152,7 @@ In the examples above, the ARIA attributes assigned in the host `x-foo` are dele
 
 #### Syntax
 
-> **Note**: See [issue #3](https://github.com/leobalter/cross-root-aria-delegation/issues/22).
+> **Note**: See [issue #22](https://github.com/leobalter/cross-root-aria-delegation/issues/22).
 
 This proposal was originally named Cross-root ARIA Delegation, as it's somehow based in the same concept than [`delegatesFocus`](https://dom.spec.whatwg.org/#dom-shadowroot-delegatesfocus). We could discuss about the final name and think if there are better alternatives for this case. Maybe "import" or maybe other words we can think about.
 
@@ -216,6 +216,8 @@ Example:
 ```
 
 ### 2. Export elements
+
+> **Note**: See [issue #23](https://github.com/leobalter/cross-root-aria-delegation/issues/23).
 
 There could be different approaches to deal with this issue.
 
