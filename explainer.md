@@ -292,7 +292,7 @@ One problem with this idea is that `exportids` is defined in the shadow host (li
 
 When you start dealing with nested shadow trees things get more complicated. We have to review the proposals so they can work in those cases too.
 
-### Combination of both proposals (issue #4)
+### Combination of both proposals ([issue #4](https://github.com/leobalter/cross-root-aria-delegation/issues/4))
 
 Once we have an agreement about the proposals for each problem it would be nice to see how they can work together in some more complex use cases.
 
