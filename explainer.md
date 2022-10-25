@@ -160,6 +160,8 @@ Apart from that the current attribute for the `template` element is very long `s
 
 #### Attributes modification timing
 
+> **Note**: See [issue #24](https://github.com/leobalter/cross-root-aria-delegation/issues/24).
+
 We'll need to determine what happens when one of the delegated attributes gets modified and when we're going to set the underneath relationships in the shadow tree elements. Probably we need to couple this with [Custom elements reactions](https://html.spec.whatwg.org/multipage/custom-elements.html#concept-custom-element-reaction) and the `attributeChangedCallback`.
 
 #### Screen readers
@@ -195,7 +197,7 @@ Example:
 
 We could not specify that `input1` is labelled by `label1` and `input2` by `label2`. In this proposal we're setting `aria-labelledby` in the custom element `x-input` directly, so we could set `aria-labelledby="label1 label2"` there. But we cannot then set the exact relationship in the inner elements.
 
-Not sure if there are actual use cases affected by this issue.
+Not sure if there are actual use cases affected by this issue. Should this be added as non-goal?
 
 #### Nested shadow trees
 
