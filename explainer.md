@@ -296,7 +296,7 @@ When you start dealing with nested shadow trees things get more complicated. We 
 
 ### Combination of both proposals
 
-> **Note**: See [issue #4](https://github.com/leobalter/cross-root-aria-delegation/issues/4).
+> **Note**: See [issue #14](https://github.com/leobalter/cross-root-aria-delegation/issues/14).
 
 Once we have an agreement about the proposals for each problem it would be nice to see how they can work together in some more complex use cases.
 
