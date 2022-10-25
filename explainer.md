@@ -150,7 +150,9 @@ customElements.define("x-foo", XFoo);
 
 In the examples above, the ARIA attributes assigned in the host `x-foo` are delegated to inner elements inside the custom element's shadow tree. Today, custom code can reflect this application but synthetically applying the aria attributes and their effects to both the host `x-foo` and its inner elements.
 
-#### Syntax ([issue #3](https://github.com/leobalter/cross-root-aria-delegation/issues/3))
+#### Syntax
+
+> See [issue #3](https://github.com/leobalter/cross-root-aria-delegation/issues/3).
 
 This proposal was originally named Cross-root ARIA Delegation, as it's somehow based in the same concept than [`delegatesFocus`](https://dom.spec.whatwg.org/#dom-shadowroot-delegatesfocus). We could discuss about the final name and think if there are better alternatives for this case. Maybe "import" or maybe other words we can think about.
 
@@ -292,14 +294,18 @@ One problem with this idea is that `exportids` is defined in the shadow host (li
 
 When you start dealing with nested shadow trees things get more complicated. We have to review the proposals so they can work in those cases too.
 
-### Combination of both proposals ([issue #4](https://github.com/leobalter/cross-root-aria-delegation/issues/4))
+### Combination of both proposals
+
+> See [issue #4](https://github.com/leobalter/cross-root-aria-delegation/issues/4).
 
 Once we have an agreement about the proposals for each problem it would be nice to see how they can work together in some more complex use cases.
 
 
 ## Issues
 
-### Generic proposal ([issue #13](https://github.com/leobalter/cross-root-aria-delegation/issues/13))
+### Generic proposal
+
+> See [issue #13](https://github.com/leobalter/cross-root-aria-delegation/issues/13).
 
 There are more IDREF attributes apart from ARIA ones.
 
