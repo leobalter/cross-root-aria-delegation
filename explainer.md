@@ -152,8 +152,7 @@ In the examples above, the ARIA attributes assigned in the host `x-foo` are dele
 
 #### Syntax
 
-> **Note**
-> See [issue #3](https://github.com/leobalter/cross-root-aria-delegation/issues/3).
+> **Note**: See [issue #3](https://github.com/leobalter/cross-root-aria-delegation/issues/3).
 
 This proposal was originally named Cross-root ARIA Delegation, as it's somehow based in the same concept than [`delegatesFocus`](https://dom.spec.whatwg.org/#dom-shadowroot-delegatesfocus). We could discuss about the final name and think if there are better alternatives for this case. Maybe "import" or maybe other words we can think about.
 
@@ -297,8 +296,7 @@ When you start dealing with nested shadow trees things get more complicated. We 
 
 ### Combination of both proposals
 
-> **Note**
-> See [issue #4](https://github.com/leobalter/cross-root-aria-delegation/issues/4).
+> **Note**: See [issue #4](https://github.com/leobalter/cross-root-aria-delegation/issues/4).
 
 Once we have an agreement about the proposals for each problem it would be nice to see how they can work together in some more complex use cases.
 
@@ -307,8 +305,7 @@ Once we have an agreement about the proposals for each problem it would be nice 
 
 ### Generic proposal
 
-> **Note**
-> See [issue #13](https://github.com/leobalter/cross-root-aria-delegation/issues/13).
+> **Note**: See [issue #13](https://github.com/leobalter/cross-root-aria-delegation/issues/13).
 
 There are more IDREF attributes apart from ARIA ones.
 
