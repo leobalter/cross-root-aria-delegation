@@ -2,7 +2,7 @@
 # Cross-root ARIA
 
 
-## Authors:
+## Authors
 
 * Leo Balter <lbalter@salesforce.com>
 * Manuel Rego <rego@igalia.com>
