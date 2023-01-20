@@ -332,8 +332,8 @@ Here we cannot set the relationship between the external `label` and the inner `
 There are other cases that also reference to other elements:
 * [`list`](https://html.spec.whatwg.org/multipage/input.html#attr-input-list) attribute in `input`.
 * [Pop Up](https://open-ui.org/components/popup.research.explainer) proposal by Open UI, that adds some new attributes `popuptoggletarget`, `popupshowtarget` and `popuphidetarget`.
-* [SVG `<use>`](https://github.com/WICG/webcomponents/issues/772)
-* [`@font-face`](https://robdodson.me/posts/at-font-face-doesnt-work-in-shadow-dom/)
+* [SVG `<use>` and the `href` attribute](https://github.com/WICG/webcomponents/issues/772)
+* [`@font-face` and the `font-family` CSS property](https://robdodson.me/posts/at-font-face-doesnt-work-in-shadow-dom/)
 
 Should we look for a solution that is generic enough to cover these cases too?
 
