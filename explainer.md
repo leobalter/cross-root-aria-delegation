@@ -329,9 +329,20 @@ Example:
 
 Here we cannot set the relationship between the external `label` and the inner `input` element. A similar thing can happen in the opposite direction with a custom label referencing an input outside the shadow tree.
 
-There are other cases that also reference to other elements:
+To be clear, there are 8 ID-referencing ARIA attributes that this proposal addresses:
+
+- `aria-activedescendant`
+- `aria-controls`
+- `aria-describedby`
+- `aria-details`
+- `aria-errormessage`
+- `aria-flowto`
+- `aria-labelledby`
+- `aria-owns`
+
+There are also other cases that also reference to other elements:
 * [`list`](https://html.spec.whatwg.org/multipage/input.html#attr-input-list) attribute in `input`.
-* [Pop Up](https://open-ui.org/components/popup.research.explainer) proposal by Open UI, that adds some new attributes `popuptoggletarget`, `popupshowtarget` and `popuphidetarget`.
+* [Popover API]([https://open-ui.org/components/popup.research.explainer](https://developer.chrome.com/docs/web-platform/popover-api/)) proposal, which adds some new attributes: `popovertoggletarget`, `popovershowtarget` and `popoverhidetarget`.
 * [SVG `<use>` and the `href` attribute](https://github.com/WICG/webcomponents/issues/772)
 * [`@font-face` and the `font-family` CSS property](https://robdodson.me/posts/at-font-face-doesnt-work-in-shadow-dom/)
 
