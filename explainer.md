@@ -340,7 +340,7 @@ To be clear, there are 8 ID-referencing ARIA attributes that this proposal addre
 - `aria-labelledby`
 - `aria-owns`
 
-There are also other cases that also reference to other elements:
+There are also other cases of attributes that reference other elements:
 * [`list`](https://html.spec.whatwg.org/multipage/input.html#attr-input-list) attribute in `input`.
 * [Popover API]([https://open-ui.org/components/popup.research.explainer](https://developer.chrome.com/docs/web-platform/popover-api/)) proposal, which adds some new attributes: `popovertoggletarget`, `popovershowtarget` and `popoverhidetarget`.
 * [SVG `<use>` and the `href` attribute](https://github.com/WICG/webcomponents/issues/772)
